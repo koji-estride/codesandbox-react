@@ -1,19 +1,44 @@
-import React, { useState } from "react";
+/* eslint react-hooks/exhaustive-deps: off */
+import React, { useEffect, useState } from "react";
 import ColorfullMessage from "./components/ColorfullMessage";
 
 const App = () => {
+  console.log("最初");
+  // [stateの変数名, stateを更新する関数名] = useState(初期値);
+  const [num, setNum] = useState(0);
+  const [faceShowFlag, setFaceShowFlag] = useState(false);
+
   const onClickCountUp = () => {
     setNum(num + 1);
   };
-  // [stateの変数名, stateを更新する関数名] = useState(初期値);
-  const [num, setNum] = useState(0);
+  const onClickSwitchShowFlag = () => {
+    setFaceShowFlag(!faceShowFlag);
+  };
+
+  useEffect(() => {
+    console.log("useEffect!!");
+    if (num > 0) {
+      if (num % 3 === 0) {
+        // ||の左がfalseの時に右を返す
+        faceShowFlag || setFaceShowFlag(true);
+      } else {
+        // &&の左がtrueの時に右を返す
+        faceShowFlag && setFaceShowFlag(false);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [num]);
+
   return (
     <>
       <h1 style={{ color: "red" }}>こんにちは！</h1>
       <ColorfullMessage color="blue">お元気ですか?</ColorfullMessage>
       <ColorfullMessage color="pink">元気です!</ColorfullMessage>
       <button onClick={onClickCountUp}>カウントアップ</button>
+      <br />
+      <button onClick={onClickSwitchShowFlag}>on/off</button>
       <p>{num}</p>
+      {faceShowFlag && <p>( ＾∀＾)</p>}
     </>
   );
 };

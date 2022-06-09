@@ -1,9 +1,9 @@
 import React from "react";
 
 const ColorfullMessage = (props) => {
+  console.log("colorfull");
   // 分割代入
   const { color, children } = props;
-  console.log(props);
   const contentStyle = {
     //color: color,　省略
     color,
